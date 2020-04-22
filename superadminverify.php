@@ -1,34 +1,30 @@
-<?php session_start();?>
-
+<?php 
+include_once('slib/header.php');
+require_once('functions/alert.php');
+?>
+<div class="container">
    Enter Pin
     <hr>
+    <div class="row col-6">
     <form method="POST" action="superadminverifyprocess.php">
 
     <?php
-              if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                  echo "<span style='color:red'>"."wrong Pin"."</span>";
-                  session_destroy();
-              }
+       print_alert(); unset($_SESSION['error']);
           ?>
    
     <p>
 
     <p>
     <label>Password</label>
-    <input type="password" name="password" id="password" placeholder="Password" required>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
     </p>
 
-  
+  </div>
 <hr>
 
 <p>
-<button type='submit'>Enter</button>
+<button class="btn btn-primary" type='submit'>Enter</button>
 </p>
 
     </form>
-
-
-    <?php
- // include_once('lib/footer.php');  
-
-?>
+</div>

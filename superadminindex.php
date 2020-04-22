@@ -1,21 +1,17 @@
-<?php session_start(); 
+<?php 
+include_once('slib/header.php'); 
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
  if(!isset($_SESSION['pin'])){
-  header("Location:superadminverify.php");
+  redirect_to("superadminverify.php");
 }
 ?>
-<p>
-<?php
-    if(isset($_SESSION['message'])&& !empty($_SESSION['message'])){
-      echo "<span style='color:green'>".$_SESSION["message"]."</span>";
-      session_destroy();
-    }
-    
-?>
-</p>
-
+<div class="container">
+<div class="row col-6">
 <p>
 Super Admin Welcome!!
 </P>
+</div>
 
 <hr>
 <P>
@@ -25,3 +21,4 @@ echo "<a href='superadminregister.php'>Register Admin</a>"." ";
 echo "<a href='superadminlogout.php'>Exit</a>"; 
 ?>
 </p>
+</div>

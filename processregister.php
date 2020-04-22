@@ -1,4 +1,7 @@
 <?php  session_start();
+require_once('functions/user.php');
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
 
 $errorCount=0;
 
@@ -32,29 +35,23 @@ if ($errorCount>0){
    $errorMessage.="s";
   }
     $errorMessage.=  " in your form submission";
-    $_SESSION["error"]= $errorMessage;
- 
-   header("Location: register.php");
+    set_alert('error',$errorMessage);
+    redirect_to("register.php");
  
  }
 elseif (!filter_var($_SESSION['email'], FILTER_VALIDATE_EMAIL)) {
-  $_SESSION["error"]= "Please Use a valid email";
-  header("Location: register.php");
+  set_alert('error',"Please Use a valid email");
+  redirect_to("register.php");
 }elseif(!preg_match("/^([a-zA-Z' ]+)$/",$_SESSION['firstname'].$_SESSION['lastname'])){
-  $_SESSION["error"]= "Name should not have numbers";
-  header("Location: register.php");
+  set_alert('error',"Name should not have numbers");
+  redirect_to("register.php");
 }elseif(strlen($_SESSION['firstname'].$_SESSION['lastname'])<2){
-  $_SESSION["error"]= "Name should not be less than two characters";
-  header("Location: register.php");
+  set_alert('error',"Name should not be less than two characters");
+  redirect_to("register.php");
 }
 else{
 
-    $allUsers=scandir("db/users/");
-    $countAllUsers=count($allUsers);
-    $newUserId=$countAllUsers-1;
-
-$fileName="db/users/".$email.".JSON";
-
+      $newUserId=find_user($email);
   $userObject=[
       'id'=>$newUserId,
       'First_Name'=>$fName,
@@ -66,20 +63,17 @@ $fileName="db/users/".$email.".JSON";
       'Department'=>$department,
       'regDate'=>$regDate
   ];
+$userExists= find_user($email);
+  
 
-  for($i=0; $i<$countAllUsers; $i++) {
-    $currentUser=$allUsers[$i];
-
-    if($currentUser==$email.".JSON"){
-      $_SESSION["error"]="Registration Failed,User already exists";
-      header("Location: register.php");
+    if($userExists){
+      set_alert('error',"Registration Failed,User already exists");
+      redirect_to("register.php");
       die();
     }
-  }
-
-  file_put_contents($fileName,json_encode($userObject));
-  $_SESSION["message"]= "Registration Success";
-  header("Location: login.php");
+    save_user($userObject);
+    set_alert('message',"Registration Success");
+    redirect_to("login.php");
 }
 
 ?>

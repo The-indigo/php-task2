@@ -1,4 +1,6 @@
 <?php session_start();
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
 
 $errorCount=0;
 
@@ -12,20 +14,18 @@ if ($errorCount>0){
   $errorMessage.="s";
  }
    $errorMessage.=  " in your form submission";
-   $_SESSION["error"]= $errorMessage;
-
-  header("Location: superadminverify.php");
+   set_alert('error', $errorMessage);
+  redirect_to("superadminverify.php");
 
 }else{
 
     if($password=='admin'){
        $_SESSION['pin']=$password;
-        header("Location:superadminindex.php");
+        redirect_to("superadminindex.php");
         die();
     }
-   
-  $_SESSION["error"]="Invalid Email/Password";
-  header("Location: superadminverify.php");
+    set_alert('error',"Invalid Email/Password");
+  redirect_to("superadminverify.php");
   die();
 }
 

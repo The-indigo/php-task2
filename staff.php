@@ -1,25 +1,21 @@
-<?php session_start();
+<?php include_once('lib/header.php'); 
+require_once('functions/redirect.php');
 if(!isset($_SESSION['loggedIn'])){
-    header("Location:login.php");
+    redirect_to("Location:login.php");
   }
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<div class="container">
+<div class="row col-8">
     <h3>
         Welcome To Your Staff Page
     </h3>
+</div>
     <p>
     <?php
         if(isset($_SESSION['time'] )&& !empty($_SESSION['time'] )){
-            echo "<span style='color:green'>"."Log in time:"."".$_SESSION["time"]."</span>";
+            echo "<span style='color:green'>"."Log in time:"." ".$_SESSION["time"]."</span>";
           }
           
     ?>
@@ -31,4 +27,4 @@ if(!isset($_SESSION['loggedIn'])){
     </p>
 </body>
 </html>
-
+</div>

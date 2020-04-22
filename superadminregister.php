@@ -1,26 +1,22 @@
-<?php include_once('lib/header.php');  
+<?php include_once('slib/header.php');  
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
  if(!isset($_SESSION['pin'])){
-    header("Location:superadminverify.php");
+    redirect_to("superadminverify.php");
     session_destroy();
   }
 ?>
+<div class="container">
     <h3>Register A Super Admin here</h3>
     <hr>
+    <div class="row col-6">
     <p><strong> All fields are required</strong></p>
-    
+    </div>
+    <div class="row col-6">
     <form method="POST" action="superadminregisterprocess.php">
     <p>
           <?php
-              if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                  echo "<span style='color:red'>".$_SESSION["error"]."</span>";
-                  session_destroy();
-                }else{
-                    if(isset($_SESSION['message'])&& !empty($_SESSION['message'])){
-                        echo "<span style='color:green'>".$_SESSION["message"]."</span>";
-                        session_destroy();
-                      }
-                }
-              
+              print_alert(); unset($_SESSION['error']); unset($_SESSION['message']);
           ?>
     </p>
 
@@ -33,16 +29,17 @@
                   echo "value=".$_SESSION['email'];
               }
           ?>
-    type="email" name="email" id="email" placeholder="Email address" required>
+    type="email" class="form-control" name="email" id="email" placeholder="Email address" required>
     </p>
 
 
-<button type='submit'>Add</button>
+<button class="btn btn-success" type='submit'>Add</button>
 </p>
 
     </form>
-
+</div>
     <p>
-<a href="superadminindex.php">Back to HomePage</a>
+<a href="superadminindex.php">Back to HomePage</a><br>
 <a href="superadminlogout.php">Exit</a>
 </p>
+</div>

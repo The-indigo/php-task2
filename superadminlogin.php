@@ -1,23 +1,25 @@
-<?php include_once('lib/header.php');  
+<?php include_once('slib/header.php');  
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
  if(!isset($_SESSION['pin'])){
-    header("Location:superadminverify.php");
+    redirect_to("superadminverify.php");
     session_destroy();
   }
 
  if(isset($_SESSION['super'])&& !empty($_SESSION['super'])){
-   header("Location:superappindex.php");
+   redirect_to("superappindex.php");
  }
 ?>
-
+<div class="container">
+<div class="row col-6">
    Super Admin Login Here
-    <hr>
+</div>
+<hr>
+<div class="row col-6">
     <form method="POST" action="superadminloginprocess.php">
 
     <?php
-              if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                  echo "<span style='color:red'>".$_SESSION["error"]."</span>";
-                  session_destroy();
-              }
+             print_alert(); unset($_SESSION['error']);
           ?>
    
     <p>
@@ -28,25 +30,26 @@
                   echo "value=".$_SESSION['email'];
               }
           ?>
-    type="email" name="email" id="email" placeholder="Email address" required>
+    type="email" class="form-control" name="email" id="email" placeholder="Email address" required>
     </p>
 
     <p>
     <label>Password</label>
-    <input type="password" name="password" id="password" placeholder="Password" required>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
     </p>
 
   
 <hr>
 
 <p>
-<button type='submit'>Login</button>
+<button  class="btn btn-success" type='submit'>Login</button>
 </p>
 
     </form>
 
-
+</div>
     <p>
-<a href="superadminindex.php">Back to HomePage</a>
+<a href="superadminindex.php">Back to HomePage</a> <br>
 <a href='superadminlogout.php'>Exit</a>
 </p>
+</div>

@@ -1,4 +1,7 @@
 <?php session_start();
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
+require_once('functions/user.php');
 
 $errorCount=0;
 $email = $_POST['email']!="" ? $_POST['email'] : $errorCount++;
@@ -13,35 +16,27 @@ if ($errorCount>0){
   $errorMessage.="s";
  }
    $errorMessage.=  " in your form submission";
-   $_SESSION["error"]= $errorMessage;
-
-  header("Location: superadminlogin.php");
+   set_alert("error",$errorMessage);
+  redirect_to("superadminlogin.php");
 
 }else{
-  $allUsers=scandir("db/superadmin/");
-  $countAllUsers=count($allUsers);
-
-  for($i=0; $i<$countAllUsers; $i++) {
-    $currentUser=$allUsers[$i];
-
-    if($currentUser==$email.".JSON"){
-     $userString=file_get_contents("db/superadmin/".$currentUser);
-      $userObject=json_decode($userString);
-      $passwordFromDb=$userObject->Password;
+  $currentSuperAdmin=find_superAdmin($email);
+      if($currentSuperAdmin){
+     $superAdminString=file_get_contents("db/superadmin/".$currentSuperAdmin->Email. ".JSON");
+      $superAdminObject=json_decode($superAdminString);
+      $passwordFromDb=$superAdminObject->Password;
       $passwordFromUser=password_verify($password, $passwordFromDb);
       
       if($passwordFromDb==$passwordFromUser){
-        $_SESSION['super']=$userObject->Email;
-          header("Location:superappindex.php");
+        $_SESSION['super']=$superAdminObject->Email;
+          redirect_to("superappindex.php");
         die();
       }
 
-
-
     }
-  }
-  $_SESSION["error"]="Invalid Email/Password";
-  header("Location: superadminlogin.php");
+  
+  set_alert("error","Invalid Email/Password");
+  redirect_to("superadminlogin.php");
   die();
 }
 ?>
