@@ -1,0 +1,33 @@
+Flutterwave Rave offers multiple ways to receive payment.
+
+ 
+
+Your task is to update the final pending page of your snh application by adding 2 methods of the payment
+ methods available via flutterwave rave to the page.
+
+ 
+
+The user should:
+
+ 
+
+Be able to successfully make payment (test accounts of course)
+Super Admin should see that the user made payment
+User should receive an email of successful payment
+User should get a list of their transaction History
+Medical team should see who has made payment and who has not before accepting to attend to their
+ appointment.
+ 
+
+This task is worth 4 points total.
+
+Push your new updated code to a new branch, the new branch name MUST be sng-v3
+
+Submit specific URL to that branch. 
+
+ 
+
+Good Luck.
+
+
+Deadline: 06/05/2020 12:00 AM
