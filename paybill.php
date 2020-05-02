@@ -1,12 +1,12 @@
 <?php
 include_once('lib/header.php');  
 require_once('functions/alert.php');
-// if(!isset($_SESSION['loggedIn'])){
-//   header("Location:login.php");
-// }
+if(!isset($_SESSION['loggedIn'])){
+  header("Location:login.php");
+}
 
 
-//if(isset($_SESSION['email'])){
+if(isset($_SESSION['email'])){
     $email=$_SESSION['email'];
     $name=$_SESSION['loggedIn'];
 
@@ -16,7 +16,7 @@ $curl = curl_init();
 $customer_email = $email;
 $amount = 3000;  
 $currency = "NGN";
-$txref = "indsnh"; // ensure you generate unique references per transaction.
+$txref = uniqid(); // ensure you generate unique references per transaction.
 $PBFPubKey = "FLWPUBK_TEST-fd563ef7cd305cc55caae804143b94c8-X"; // get your public key from the dashboard.
 $redirect_url = "http://localhost/start-php/task2/processpay.php";
 //$payment_plan = "pass the plan id"; // this is only required for recurring payments.
@@ -63,6 +63,6 @@ if(!$transaction->data && !$transaction->data->link){
 // redirect to page so User can pay
 // uncomment this line to allow the user redirect to the payment page
 header('Location: ' . $transaction->data->link);
-//}
+}
 
 ?>

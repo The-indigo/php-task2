@@ -1,4 +1,6 @@
 <?php
+include_once('lib/header.php');
+require_once('functions/email.php');
     if (isset($_GET['txref'])) {
         $ref = $_GET['txref'];
         $amount = "3000"; //Correct Amount from Server
@@ -34,11 +36,20 @@
         $chargeCurrency = $resp['data']['currency'];
 
         if (($chargeResponsecode == "00" || $chargeResponsecode == "0") && ($chargeAmount == $amount)  && ($chargeCurrency == $currency)) {
-          
+          if(isset($_SESSION['email'])){
+          send_mail($subject = "Successful transaction", 
+          $message= "A payment was made by you with reference.' '. $ref.' '. your lecturer will be notified", 
+          $email= $_SESSION['email']);
+          header("Location:payredirect.php");
+        }
           header("Location:payredirect.php");
         } else {
+          if(isset($_SESSION['email'])){
+            send_mail($subject = "Transaction failed with reference.' '. $ref.' '. please try again",
+             $message= "Your transaction was not succesful", 
+             $email= $_SESSION['email']);
             //Dont Give Value and return to Failure page
-            header("Location:paymentverification.php");
+             }   header("Location:paymentverification.php");
         }
     }
         else {
