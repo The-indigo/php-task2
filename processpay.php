@@ -3,7 +3,7 @@ include_once('lib/header.php');
 require_once('functions/email.php');
     if (isset($_GET['txref'])) {
         $ref = $_GET['txref'];
-        $amount = "3000"; //Correct Amount from Server
+        $amount = "10"; //Correct Amount from Server
         $currency = "NGN"; //Correct Currency from Server
 
         $query = array(
@@ -36,29 +36,41 @@ require_once('functions/email.php');
         $chargeCurrency = $resp['data']['currency'];
 
         if (($chargeResponsecode == "00" || $chargeResponsecode == "0") && ($chargeAmount == $amount)  && ($chargeCurrency == $currency)) {
-          if(isset($_SESSION['email'])){
-          send_mail($subject = "Successful transaction", 
-          $message= "A payment was made by you with reference $ref your lecturer will be notified", 
-          $email= $_SESSION['email']);
-          $userObject=[
-            'Email'=>$email,
-            'Amount'=>$amount
-          ];
-          $fileName="db/payments/".$email.".json";
-          file_put_contents($fileName,json_encode($userObject));
+            send_mail($subject = "Successful transaction", 
+            $message= "A payment was made by you with reference $ref your lecturer will be notified", 
+            $email= $_SESSION['email']);
+            $userObject=[
+              'Email'=>$email,
+              'Amount'=>$amount
+            ];
+            $fileName="db/payments/".$email.".json";
+            if(file_exists($fileName))  
+            {  
+                 $current_data = file_get_contents($fileName);  
+                 $array_data = json_decode($current_data, true);  
+                 $extra = [  
+                  'Email'=>$email,  
+                  'Amount'=>$amount,  
+                   
+                 ];  
+                 $array_data[] = $extra;  
+                 $final_data = json_encode($array_data);  
+                 file_put_contents($fileName, $final_data); 
+                 header("Location:payredirect.php");
+                die();                                              
+            }
+              file_put_contents($fileName, json_encode($userObject));                 
+          
+            header("Location:payredirect.php");
+          } else {
+           header("Location:dashboard.php");
         }
-          header("Location:payredirect.php");
-        } else {
-          if(isset($_SESSION['email'])){
-            send_mail($subject = "Transaction failed with reference.' '. $ref.' '. please try again",
-             $message= "Your transaction was not succesful", 
-             $email= $_SESSION['email']);
-            //Dont Give Value and return to Failure page
-             }   header("Location:dashboard.php");
-        }
+        
     }
         else {
       die('No reference supplied');
     }
 
 ?>
+
+

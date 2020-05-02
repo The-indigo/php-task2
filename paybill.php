@@ -22,11 +22,11 @@ if(isset($_SESSION['email'])){
 
 
 $customer_email = $email;
-$amount = 3000;  
+$amount = 10;  
 $currency = "NGN";
 $txref = uniqid(); // ensure you generate unique references per transaction.
 $PBFPubKey = "FLWPUBK_TEST-fd563ef7cd305cc55caae804143b94c8-X"; // get your public key from the dashboard.
-$redirect_url = "http://localhost/start-php/task2/processpay.php";
+$redirect_url = "https://localhost/start-php/task2/processpay.php";
 //$payment_plan = "pass the plan id"; // this is only required for recurring payments.
 
 
