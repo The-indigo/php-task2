@@ -38,9 +38,14 @@ require_once('functions/email.php');
         if (($chargeResponsecode == "00" || $chargeResponsecode == "0") && ($chargeAmount == $amount)  && ($chargeCurrency == $currency)) {
           if(isset($_SESSION['email'])){
           send_mail($subject = "Successful transaction", 
-          $message= "A payment was made by you with reference.' '. $ref.' '. your lecturer will be notified", 
+          $message= "A payment was made by you with reference $ref your lecturer will be notified", 
           $email= $_SESSION['email']);
-          header("Location:payredirect.php");
+          $userObject=[
+            'Email'=>$email,
+            'Amount'=>$amount
+          ];
+          $fileName="db/payments/".$email.".json";
+          file_put_contents($fileName,json_encode($userObject));
         }
           header("Location:payredirect.php");
         } else {
@@ -49,7 +54,7 @@ require_once('functions/email.php');
              $message= "Your transaction was not succesful", 
              $email= $_SESSION['email']);
             //Dont Give Value and return to Failure page
-             }   header("Location:paymentverification.php");
+             }   header("Location:dashboard.php");
         }
     }
         else {

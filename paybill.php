@@ -10,7 +10,15 @@ if(isset($_SESSION['email'])){
     $email=$_SESSION['email'];
     $name=$_SESSION['loggedIn'];
 
-$curl = curl_init();
+    $allUsers=scandir("db/appointments/");
+    $countAllUsers=count($allUsers);
+    for($i=0; $i<$countAllUsers; $i++) {
+        $currentUser=$allUsers[$i];
+        //check if user already booked an appointment
+        //if not, redirect to book an appointment
+    if($currentUser==$email.".JSON"){
+
+        $curl = curl_init();
 
 
 $customer_email = $email;
@@ -63,6 +71,17 @@ if(!$transaction->data && !$transaction->data->link){
 // redirect to page so User can pay
 // uncomment this line to allow the user redirect to the payment page
 header('Location: ' . $transaction->data->link);
+die();
+      }
+
+    }  
+        set_alert('error', "You have no pending appointment.Book an appointment before you make payment");
+        header('Location:booklecturer.php');
+      
+
+      
+
+
 }
 
 ?>
