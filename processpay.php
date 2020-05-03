@@ -3,8 +3,8 @@ include_once('lib/header.php');
 require_once('functions/email.php');
     if (isset($_GET['txref'])) {
         $ref = $_GET['txref'];
-        $amount = "10"; //Correct Amount from Server
-        $currency = "NGN"; //Correct Currency from Server
+        $amount = "10"; 
+        $currency = "NGN"; 
 
         $query = array(
             "SECKEY" => "FLWSECK_TEST-3fb4b8dd35ad8bb9219515197057bf6a-X",
