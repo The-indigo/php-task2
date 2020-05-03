@@ -16,6 +16,7 @@ if(!isset($_SESSION['pin'])){
 <?php
 echo "<p> <a href='register.php'>Add new user</a> </p>"; 
 echo "<p> <a href='superadminregister.php'>Add newAdmin</a> </p>"; 
+echo '<a href=allpayment.php>View All Payments</a>';
 ?>
 </p>
 </div>

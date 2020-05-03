@@ -54,12 +54,12 @@ require_once('functions/email.php');
                    
                  ];  
                  $array_data[] = $extra;  
-                 $final_data = json_encode($array_data);  
+                 $final_data = json_encode($array_data,JSON_PRETTY_PRINT);  
                  file_put_contents($fileName, $final_data); 
                  header("Location:payredirect.php");
                 die();                                              
             }
-              file_put_contents($fileName, json_encode($userObject));                 
+              file_put_contents($fileName, json_encode($userObject,JSON_PRETTY_PRINT));                 
           
             header("Location:payredirect.php");
           } else {

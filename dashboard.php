@@ -50,6 +50,7 @@ if(isset($_SESSION['role']) && $_SESSION['role']=="Student"){
   if(isset($_SESSION['role']) && $_SESSION['role']=="Staff"){
  
   echo '<h4>Your Appointments</h4>';
+  echo '<a href=paid.php>View Payments</a>';
   $files = array_diff(scandir("db/appointments/"), array('.', '..'));
                         
 foreach ($files as $file) {
@@ -65,17 +66,17 @@ foreach ($files as $file) {
       echo "<tr><th scope='col'>Student Name</th> <th scope='col'>Date of appointment</th>
        <th scope='col'>Nature of appointment</th>
        <th scope='col'> initial complaint</th>
+       <th scope='col'> Email</th>
        </tr>";
       "</thead>";
    "<tbody>";
   echo "<tr> <td>$details->First_Name $details->Last_Name.</td>
   <td>$details->Date.</td><td>$details->Nature.</td>
-  <td>$details->Complaint.</td></tr>";
+  <td>$details->Complaint.</td><td>$details->Email.</td></tr>";
    
   echo "</tbody>";
 echo "</table>";           
     }
-  
    
 }
 if ($_SESSION['department']!= $details->Department){

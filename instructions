@@ -11,9 +11,9 @@ The user should:
 
  
 
-Be able to successfully make payment (test accounts of course)
+Be able to successfully make payment (test accounts of course)-
 Super Admin should see that the user made payment
-User should receive an email of successful payment
+User should receive an email of successful payment-
 User should get a list of their transaction History
 Medical team should see who has made payment and who has not before accepting to attend to their
  appointment.
